@@ -63,4 +63,5 @@ class KMeans(object):
         # Asignar nuevos datos a los clusters basándose en los centroides almacenados
         distances = np.linalg.norm(new_data[:, np.newaxis, :] - self.centroids, axis=2)
         labels = np.argmin(distances, axis=1)
+        
         return labels
