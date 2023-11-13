@@ -25,18 +25,7 @@ train_dataframe = Dataframe(training_images_filepath, training_labels_filepath)
 # Cargar los datos
 x_train, y_train = train_dataframe.load_data()
 
-"""
 
-# Ruta de los archivos
-training_images_filepath = 'MNIST/t10k-images.idx3-ubyte'
-training_labels_filepath = 'MNIST/t10k-labels.idx1-ubyte'
-
-# Crear una instancia de la clase Dataframe
-train_dataframe = Dataframe(training_images_filepath, training_labels_filepath)
-
-# Cargar los datos
-x_train, y_train = train_dataframe.load_data()
-"""
 
 #%%% X Test
 
@@ -50,14 +39,7 @@ test_dataframe = Dataframe(test_images_filepath, test_labels_filepath)
 # Cargar los datos
 x_test, y_test = test_dataframe.load_data()
 
-"""
 
-# Obtener una muestra aleatoria de 100 registros (simulación de x_test)
-n_muestra = 100
-indices_muestra = np.random.choice(x_train.shape[0], n_muestra, replace=False)
-x_test = x_train[indices_muestra, :]
-y_test = y_train[indices_muestra]
-"""
 #%% IMPLEMENTACIÓN K-MEANS
 
 #%%% Fit con x_train
@@ -91,7 +73,7 @@ x_test_reducido = pca.fit_transform(x_test)
 
 # Seleccionar una muestra aleatoria de 1000 registros
 indices_muestra = np.random.choice(x_test_reducido.shape[0], 1000, replace=False)
-#indices_muestra = np.random.choice(x_test_reducido.shape[0], 10, replace=False)
+
 muestra = x_test_reducido[indices_muestra, :]
 
 muestra_labels = y_test[indices_muestra]

@@ -43,10 +43,15 @@ class KMeans(object):
 
             # Verificar convergencia
             if np.all(centroids == new_centroids):
-                print(f"Convergencia alcanzada en la iteración {iteration + 1}.")
+                print(f"\nConvergencia alcanzada en la iteración {iteration + 1}.")
+                print("\nCentroides:\n")
+                print(centroids)
+                
                 break
 
             centroids = new_centroids
+            print(f"\n\nCentroides en la iteración {iteration + 1}.\n")
+            print(centroids)
 
         else:
             print(f"Se alcanzó el número máximo de iteraciones ({self.max_iterations}) sin converger.")
