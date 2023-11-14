@@ -145,9 +145,6 @@ plt.show()
 
 #%% MOSTRAR ELEMENTOS EN LOS CLÚSTER
 
-import numpy as np
-import matplotlib.pyplot as plt
-
 def mostrar_muestra_imagenes(cluster, datos, etiquetas, n_muestra=5):
     np.random.seed(1989)
     indices_cluster = np.where(etiquetas == cluster)[0]
