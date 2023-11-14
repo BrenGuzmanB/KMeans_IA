@@ -13,7 +13,7 @@ from sklearn.decomposition import PCA
 
 #%% CARGAR LOS DATOS
 
-#%%% X Train
+#%%% X Train, Y Train
 
 # Ruta de los archivos
 training_images_filepath = 'MNIST/train-images.idx3-ubyte'
@@ -27,7 +27,7 @@ x_train, y_train = train_dataframe.load_data()
 
 
 
-#%%% X Test
+#%%% X Test, Y Test
 
 # Ruta de los archivos
 test_images_filepath = 'MNIST/t10k-images.idx3-ubyte'
@@ -44,7 +44,7 @@ x_test, y_test = test_dataframe.load_data()
 
 #%%% Fit con x_train
 
-kmeans = KMeans(k=10, max_iterations=300)
+kmeans = KMeans(k=13, max_iterations=300)
 train_labels = kmeans.fit(x_train)
 
 #%%% Predict con x_test
@@ -62,7 +62,7 @@ labels = skmeans.labels_
 
 #%% GRÁFICAS
 
-#%%% Etiquetas reales 
+#%%% Reducir dimensionalidad
 
 np.random.seed(3)
 
@@ -75,6 +75,8 @@ x_test_reducido = pca.fit_transform(x_test)
 indices_muestra = np.random.choice(x_test_reducido.shape[0], 1000, replace=False)
 
 muestra = x_test_reducido[indices_muestra, :]
+
+#%%% Etiquetas reales 
 
 muestra_labels = y_test[indices_muestra]
 
@@ -103,7 +105,7 @@ muestra_labels = cluster_labels[indices_muestra]
 # Graficar la muestra en función de los dos primeros componentes principales
 plt.figure(figsize=(10, 8))
 
-for cluster in range(10):  # 10 clusters
+for cluster in range(13):  # 10 clusters
     indices_cluster = np.where(muestra_labels == cluster)
     plt.scatter(
         muestra[indices_cluster, 0],
@@ -139,3 +141,27 @@ plt.xlabel('Primer Componente Principal')
 plt.ylabel('Segundo Componente Principal')
 plt.legend()
 plt.show()
+
+
+#%% MOSTRAR ELEMENTOS EN LOS CLÚSTER
+
+def mostrar_muestra_imagenes(cluster, datos, etiquetas, n_muestra=5):
+    np.random.seed(1989)
+    indices_cluster = np.where(etiquetas == cluster)[0]
+    muestra_indices = np.random.choice(indices_cluster, n_muestra, replace=False)
+
+    plt.figure(figsize=(10, 2))
+
+    for i, indice in enumerate(muestra_indices):
+        plt.subplot(1, n_muestra, i + 1)
+        imagen = datos[indice, :].reshape(28, 28)
+        plt.imshow(imagen, cmap='gray')
+        plt.axis('off')
+        plt.title(f'Cluster {cluster}')
+
+    plt.show()
+
+
+n_clusters = 13  
+for cluster in range(n_clusters):
+    mostrar_muestra_imagenes(cluster, x_test, cluster_labels)
